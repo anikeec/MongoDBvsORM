@@ -5,15 +5,19 @@
  */
 package com.apu.mongodbvsorm.menu;
 
+import com.apu.mongodbvsorm.utils.Logger;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import org.apache.commons.lang.exception.ExceptionUtils;
 
 /**
  *
  * @author apu
  */
 public abstract class MenuState {
+    
+    private static Logger LOGGER = Logger.getInstance();
     
     public static String RET_OK = "OK";
     public static String RET_EXIT = "EXIT";
@@ -45,7 +49,8 @@ public abstract class MenuState {
                 new BufferedReader(new InputStreamReader(System.in));
         try {
             retValue = breader.readLine();
-        } catch (IOException ex) {            
+        } catch (IOException ex) { 
+            LOGGER.error(MenuState.class, ExceptionUtils.getStackTrace(ex));
         }
         return retValue;
     }
@@ -62,6 +67,7 @@ public abstract class MenuState {
             try {
                 retValue = Integer.parseInt(inputText);
             } catch (NumberFormatException ex) {
+                LOGGER.error(MenuState.class, ExceptionUtils.getStackTrace(ex));
                 System.out.println("Error. Please choose menu item.");
                 continue;
             }

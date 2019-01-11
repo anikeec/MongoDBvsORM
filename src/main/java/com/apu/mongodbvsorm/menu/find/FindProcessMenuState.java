@@ -10,9 +10,12 @@ import com.apu.mongodbvsorm.dao.NotebookEntityDAO;
 import com.apu.mongodbvsorm.entities.NotebookEntity;
 import com.apu.mongodbvsorm.menu.MainMenuState;
 import com.apu.mongodbvsorm.menu.MenuState;
+import com.apu.mongodbvsorm.menu.add.AddSavingMenuState;
+import com.apu.mongodbvsorm.utils.Logger;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.mongodb.morphia.dao.BasicDAO;
 import org.mongodb.morphia.query.Query;
 
@@ -22,6 +25,7 @@ import org.mongodb.morphia.query.Query;
  */
 public class FindProcessMenuState  extends MenuState {
 
+    private static Logger LOGGER = Logger.getInstance();
     private static MenuState instance;
 
     private FindProcessMenuState() {
@@ -58,7 +62,7 @@ public class FindProcessMenuState  extends MenuState {
                 System.out.println(entity.toString());
             }
         } catch (Exception ex) {
-            System.out.println("Error: " + ex.getMessage());
+            LOGGER.error(AddSavingMenuState.class, ExceptionUtils.getStackTrace(ex));
         }
         TempRepository.setTempParameter(null);
         TempRepository.setEntityToSave(null);

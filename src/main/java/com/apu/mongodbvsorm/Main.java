@@ -8,10 +8,12 @@ package com.apu.mongodbvsorm;
 import com.apu.mongodbvsorm.dao.NotebookEntityDAO;
 import com.apu.mongodbvsorm.menu.MainMenuState;
 import com.apu.mongodbvsorm.menu.MenuState;
+import com.apu.mongodbvsorm.utils.Logger;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.ReadPreference;
 import com.mongodb.ServerAddress;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 
@@ -25,22 +27,25 @@ public class Main {
     public static final int DB_PORT = 27017;
     public static final String DB_NAME = "NotebookDB";
     
+    private static Logger LOGGER = Logger.getInstance();
+    
     public static void main(String[] args) {
-       
-        Main.init();
-
-        String ret = null;
-        MenuState state = MainMenuState.getInstance();
-        MenuState.setCurrentState(state);
-        MenuState.setPreviousState(state);
-        while(true) {
-            ret = MenuState.getCurrentState().handle();
-            if(ret != null) {
-                if(ret.equals(MenuState.RET_EXIT))
-                    return;
+        try {
+            Main.init();
+            String ret = null;
+            MenuState state = MainMenuState.getInstance();
+            MenuState.setCurrentState(state);
+            MenuState.setPreviousState(state);
+            while(true) {
+                ret = MenuState.getCurrentState().handle();
+                if(ret != null) {
+                    if(ret.equals(MenuState.RET_EXIT))
+                        return;
+                }
             }
-        }
-        
+        } catch (Exception ex) {
+            LOGGER.error(Main.class, ExceptionUtils.getStackTrace(ex));
+        }      
     }
     
     private static void init() {
@@ -54,13 +59,13 @@ public class Main {
                 // Read from the primary, if not available use a secondary
             .readPreference(ReadPreference.primaryPreferred()) 
             .build();
-        MongoClient mongoClient;
-        mongoClient = new MongoClient(new ServerAddress(DB_HOST, DB_PORT), mongoOptions);
-        
-        final Morphia morphia = new Morphia();
-        morphia.mapPackage("com.apu.mongodbvsorm.entities");
-        final Datastore datastore = morphia.createDatastore(new MongoClient(), "notebookDB");        
-        NotebookEntityDAO.init(datastore);
+        try (MongoClient mongoClient = new MongoClient(new ServerAddress(DB_HOST, DB_PORT), mongoOptions)) {        
+            final Morphia morphia = new Morphia();
+            morphia.mapPackage("com.apu.mongodbvsorm.entities");
+            final Datastore datastore = morphia.createDatastore(mongoClient, "notebookDB");        
+            NotebookEntityDAO.init(datastore);
+        }
+        LOGGER.debug(Main.class, "Database connected - " + DB_HOST + " : " + DB_PORT);
     }
     
 }

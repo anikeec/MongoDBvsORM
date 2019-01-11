@@ -10,6 +10,8 @@ import com.apu.mongodbvsorm.dao.NotebookEntityDAO;
 import com.apu.mongodbvsorm.entities.NotebookEntity;
 import com.apu.mongodbvsorm.menu.MainMenuState;
 import com.apu.mongodbvsorm.menu.MenuState;
+import com.apu.mongodbvsorm.utils.Logger;
+import org.apache.commons.lang.exception.ExceptionUtils;
 
 /**
  *
@@ -17,6 +19,7 @@ import com.apu.mongodbvsorm.menu.MenuState;
  */
 public class AddSavingMenuState extends MenuState {
 
+    private static Logger LOGGER = Logger.getInstance();
     private static MenuState instance;
 
     private AddSavingMenuState() {
@@ -30,7 +33,7 @@ public class AddSavingMenuState extends MenuState {
         try {
             NotebookEntityDAO.getInstance().save(tempEntity);
         } catch (Exception ex) {
-            System.out.println("Error: " + ex.getMessage());
+            LOGGER.error(AddSavingMenuState.class, ExceptionUtils.getStackTrace(ex));
         }
         TempRepository.setTempParameter(null);
         TempRepository.setEntityToSave(null);

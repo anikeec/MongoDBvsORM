@@ -8,8 +8,6 @@ package com.apu.mongodbvsorm.utils.logger;
 import com.apu.mongodbvsorm.utils.storage.FileStorage;
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.lang.exception.ExceptionUtils;
 
 /**
@@ -28,6 +26,7 @@ public class LoggingThread extends Thread {
     }
     
     private void init() {
+        logStorage.setFileName("log.txt");
         this.setDaemon(true);
         this.setName("LoggingThread");
     }
