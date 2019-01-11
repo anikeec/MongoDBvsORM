@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
@@ -20,20 +21,22 @@ import org.mongodb.morphia.annotations.Id;
 public class NotebookEntity {
     
     @Id
-    private Integer entityId;
-    
-    private String message;
-    
+    private ObjectId entityId;    
+    private String message;    
+    private String recipient;
+    private Integer date;
+    private Integer month;
+    private Integer year;
     private Map<String, String> parameters = new HashMap<>();
 
     public NotebookEntity() {
     }
 
-    public Integer getEntityId() {
+    public ObjectId getEntityId() {
         return entityId;
     }
 
-    public void setEntityId(Integer entityId) {
+    public void setEntityId(ObjectId entityId) {
         this.entityId = entityId;
     }
 
@@ -43,6 +46,38 @@ public class NotebookEntity {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
+    }
+
+    public Integer getDate() {
+        return date;
+    }
+
+    public void setDate(Integer date) {
+        this.date = date;
+    }
+
+    public Integer getMonth() {
+        return month;
+    }
+
+    public void setMonth(Integer month) {
+        this.month = month;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
     }
 
     public Map<String, String> getParameters() {
@@ -60,14 +95,15 @@ public class NotebookEntity {
                             parameters.entrySet().iterator();
         while(iterator.hasNext()) {
             Entry<String, String> entry = iterator.next();
-            sb.append(entry.getKey())
+            sb.append("{")
+                    .append(entry.getKey())
                     .append(" : ")
                     .append(entry.getValue())
-                    .append(";");
+                    .append("} ");
         }
         return "NotebookEntity{" + "entityId=" + entityId + 
                 ", message=" + message + 
-                ", parameters=(" + sb.toString() + ")}";
+                ", parameters : " + sb.toString() + "}";
     }
 
 }
