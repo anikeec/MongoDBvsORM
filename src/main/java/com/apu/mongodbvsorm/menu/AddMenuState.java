@@ -5,8 +5,8 @@
  */
 package com.apu.mongodbvsorm.menu;
 
+import com.apu.mongodbvsorm.TempRepository;
 import com.apu.mongodbvsorm.entities.NotebookEntity;
-import com.apu.mongodbvsorm.entities.Parameter;
 import com.apu.mongodbvsorm.menu.add.AddParameterMenuState;
 import com.apu.mongodbvsorm.menu.add.AddSavingMenuState;
 
@@ -17,9 +17,6 @@ import com.apu.mongodbvsorm.menu.add.AddSavingMenuState;
 public class AddMenuState extends MenuState {
     
     private static MenuState instance;
-    
-    private static Parameter tempParameter;
-    private static NotebookEntity entityToSave;
 
     private AddMenuState() {
     }
@@ -30,7 +27,7 @@ public class AddMenuState extends MenuState {
                 this.getChoosenValue();        
         String retValue = MenuState.RET_OK;
         if(MenuState.getPreviousState().getClass().equals(MainMenuState.class)) {
-            setEntityToSave(new NotebookEntity());
+            TempRepository.setEntityToSave(new NotebookEntity());
         }
         switch(menuItem) {
             case 0:
@@ -68,22 +65,6 @@ public class AddMenuState extends MenuState {
         if(instance == null)
             instance = new AddMenuState();
         return instance;
-    }
-    
-    public static Parameter getTempParameter() {
-        return tempParameter;
-    }
-
-    public static void setTempParameter(Parameter tempParameter) {
-        AddMenuState.tempParameter = tempParameter;
-    }
-
-    public static NotebookEntity getEntityToSave() {
-        return entityToSave;
-    }
-
-    public static void setEntityToSave(NotebookEntity entityToSave) {
-        AddMenuState.entityToSave = entityToSave;
     }
     
 }
