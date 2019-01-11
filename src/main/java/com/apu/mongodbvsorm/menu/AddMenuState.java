@@ -8,6 +8,7 @@ package com.apu.mongodbvsorm.menu;
 import com.apu.mongodbvsorm.entities.NotebookEntity;
 import com.apu.mongodbvsorm.entities.Parameter;
 import com.apu.mongodbvsorm.menu.add.AddParameterMenuState;
+import com.apu.mongodbvsorm.menu.add.AddSavingMenuState;
 
 /**
  *
@@ -38,6 +39,10 @@ public class AddMenuState extends MenuState {
             case 1:
                     MenuState.setPreviousState(this);
                     MenuState.setCurrentState(AddParameterMenuState.getInstance());
+                    break;
+            case 6:
+                    MenuState.setPreviousState(this);
+                    MenuState.setCurrentState(AddSavingMenuState.getInstance());
                     break;
             default:
                     break;

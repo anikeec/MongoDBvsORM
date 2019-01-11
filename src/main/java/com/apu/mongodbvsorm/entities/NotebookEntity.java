@@ -6,7 +6,9 @@
 package com.apu.mongodbvsorm.entities;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
@@ -49,6 +51,23 @@ public class NotebookEntity {
 
     public void setParameters(Map<String, String> parameters) {
         this.parameters = parameters;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        Iterator<Map.Entry<String, String>> iterator = 
+                            parameters.entrySet().iterator();
+        while(iterator.hasNext()) {
+            Entry<String, String> entry = iterator.next();
+            sb.append(entry.getKey())
+                    .append(" : ")
+                    .append(entry.getValue())
+                    .append(";");
+        }
+        return "NotebookEntity{" + "entityId=" + entityId + 
+                ", message=" + message + 
+                ", parameters=(" + sb.toString() + ")}";
     }
 
 }
