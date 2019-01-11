@@ -33,6 +33,7 @@ public class MainMenuState extends MenuState {
                     MenuState.setCurrentState(FindMenuState.getInstance());
                     break;                    
             default:
+                    System.out.println("Hasn't realized yet.");
                     break;
         }        
         return retValue;
@@ -41,8 +42,9 @@ public class MainMenuState extends MenuState {
     @Override
     public String getMenuHeader() {
         StringBuilder sb = new StringBuilder();
+        sb.append("\r\n");
         sb.append("Main menu. Choose action:").append("\r\n");
-        sb.append("0 - Return back,").append("\r\n");
+        sb.append("0 - Exit,").append("\r\n");
         sb.append("1 - Add to database,").append("\r\n");
         sb.append("2 - Change into database,").append("\r\n");
         sb.append("3 - Find into database,").append("\r\n");

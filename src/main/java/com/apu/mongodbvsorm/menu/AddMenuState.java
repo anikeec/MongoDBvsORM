@@ -42,6 +42,7 @@ public class AddMenuState extends MenuState {
                     MenuState.setCurrentState(AddSavingMenuState.getInstance());
                     break;
             default:
+                    System.out.println("Hasn't realized yet.");
                     break;
         }        
         return retValue;
@@ -50,6 +51,7 @@ public class AddMenuState extends MenuState {
     @Override
     public String getMenuHeader() {
         StringBuilder sb = new StringBuilder();
+        sb.append("\r\n");
         sb.append("Add menu. Choose action:").append("\r\n");
         sb.append("0 - Return to main menu,").append("\r\n");
         sb.append("1 - Add parameter,").append("\r\n");
