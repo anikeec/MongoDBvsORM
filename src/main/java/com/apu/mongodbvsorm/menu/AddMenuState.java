@@ -37,7 +37,7 @@ public class AddMenuState extends MenuState {
                     MenuState.setPreviousState(this);
                     MenuState.setCurrentState(AddParameterMenuState.getInstance());
                     break;
-            case 6:
+            case 3:
                     MenuState.setPreviousState(this);
                     MenuState.setCurrentState(AddSavingMenuState.getInstance());
                     break;
@@ -56,10 +56,7 @@ public class AddMenuState extends MenuState {
         sb.append("0 - Return to main menu,").append("\r\n");
         sb.append("1 - Add parameter,").append("\r\n");
         sb.append("2 - Add recipient,").append("\r\n");
-        sb.append("3 - Add day,").append("\r\n");
-        sb.append("4 - Add month,").append("\r\n");
-        sb.append("5 - Add year").append("\r\n");
-        sb.append("6 - Save entity to notebook");
+        sb.append("3 - Save entity to notebook");
         return sb.toString();
     }
     

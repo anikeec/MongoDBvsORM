@@ -45,10 +45,7 @@ public class FindMenuState extends MenuState {
         sb.append("Find menu. Choose action:").append("\r\n");
         sb.append("0 - Return to main menu,").append("\r\n");
         sb.append("1 - Find by parameter,").append("\r\n");
-        sb.append("2 - Find by recipient,").append("\r\n");
-        sb.append("3 - Find by day,").append("\r\n");
-        sb.append("4 - Find by month,").append("\r\n");
-        sb.append("5 - Find by year");
+        sb.append("2 - Find by recipient,");
         return sb.toString();
     }
     
