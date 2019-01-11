@@ -5,7 +5,7 @@
  */
 package com.apu.mongodbvsorm.menu.find;
 
-import com.apu.mongodbvsorm.TempRepository;
+import com.apu.mongodbvsorm.utils.storage.TemporaryStorage;
 import com.apu.mongodbvsorm.entities.NotebookEntity;
 import com.apu.mongodbvsorm.menu.MenuState;
 
@@ -35,7 +35,7 @@ public class FindByParameterMenuState extends MenuState {
         }        
         NotebookEntity tempEntity = new NotebookEntity();
         tempEntity.getParameters().put(inputText, null);
-        TempRepository.setEntityToSave(tempEntity);
+        TemporaryStorage.setEntityToSave(tempEntity);
 //        MenuState.setPreviousState(this);
         MenuState.setCurrentState(FindProcessMenuState.getInstance());
         return MenuState.RET_OK;

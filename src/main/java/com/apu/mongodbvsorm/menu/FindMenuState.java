@@ -5,8 +5,6 @@
  */
 package com.apu.mongodbvsorm.menu;
 
-import com.apu.mongodbvsorm.TempRepository;
-import com.apu.mongodbvsorm.entities.NotebookEntity;
 import com.apu.mongodbvsorm.menu.find.FindByParameterMenuState;
 
 /**
@@ -25,9 +23,6 @@ public class FindMenuState extends MenuState {
         int menuItem = 
                 this.getChoosenValue();        
         String retValue = MenuState.RET_OK;
-//        if(MenuState.getPreviousState().getClass().equals(MainMenuState.class)) {
-//            TempRepository.setEntityToSave(new NotebookEntity());
-//        }
         switch(menuItem) {
             case 0:
                     MenuState.setCurrentState(MainMenuState.getInstance());

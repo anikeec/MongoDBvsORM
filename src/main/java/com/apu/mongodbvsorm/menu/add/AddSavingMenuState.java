@@ -5,7 +5,7 @@
  */
 package com.apu.mongodbvsorm.menu.add;
 
-import com.apu.mongodbvsorm.TempRepository;
+import com.apu.mongodbvsorm.utils.storage.TemporaryStorage;
 import com.apu.mongodbvsorm.dao.NotebookEntityDAO;
 import com.apu.mongodbvsorm.entities.NotebookEntity;
 import com.apu.mongodbvsorm.menu.MainMenuState;
@@ -27,7 +27,7 @@ public class AddSavingMenuState extends MenuState {
     
     @Override
     public String handle() {
-        NotebookEntity tempEntity = TempRepository.getEntityToSave();
+        NotebookEntity tempEntity = TemporaryStorage.getEntityToSave();
         if(tempEntity == null)
             throw new NullPointerException("tempEntity hasn't initialized yet.");
         try {
@@ -35,8 +35,8 @@ public class AddSavingMenuState extends MenuState {
         } catch (Exception ex) {
             LOGGER.error(AddSavingMenuState.class, ExceptionUtils.getStackTrace(ex));
         }
-        TempRepository.setTempParameter(null);
-        TempRepository.setEntityToSave(null);
+        TemporaryStorage.setTempParameter(null);
+        TemporaryStorage.setEntityToSave(null);
         System.out.println("Entity has saved:");
         System.out.println(tempEntity.toString());
         System.out.println("");

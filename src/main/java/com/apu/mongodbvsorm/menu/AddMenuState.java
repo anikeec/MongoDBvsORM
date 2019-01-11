@@ -5,7 +5,7 @@
  */
 package com.apu.mongodbvsorm.menu;
 
-import com.apu.mongodbvsorm.TempRepository;
+import com.apu.mongodbvsorm.utils.storage.TemporaryStorage;
 import com.apu.mongodbvsorm.entities.NotebookEntity;
 import com.apu.mongodbvsorm.menu.add.AddParameterMenuState;
 import com.apu.mongodbvsorm.menu.add.AddSavingMenuState;
@@ -27,7 +27,7 @@ public class AddMenuState extends MenuState {
                 this.getChoosenValue();        
         String retValue = MenuState.RET_OK;
         if(MenuState.getPreviousState().getClass().equals(MainMenuState.class)) {
-            TempRepository.setEntityToSave(new NotebookEntity());
+            TemporaryStorage.setEntityToSave(new NotebookEntity());
         }
         switch(menuItem) {
             case 0:

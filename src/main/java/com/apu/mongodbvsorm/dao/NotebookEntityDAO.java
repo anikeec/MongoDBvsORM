@@ -6,9 +6,7 @@
 package com.apu.mongodbvsorm.dao;
 
 import com.apu.mongodbvsorm.entities.NotebookEntity;
-import com.mongodb.MongoClient;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.dao.BasicDAO;
 
 /**

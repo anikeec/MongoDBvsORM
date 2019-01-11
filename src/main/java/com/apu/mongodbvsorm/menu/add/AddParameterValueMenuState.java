@@ -5,7 +5,7 @@
  */
 package com.apu.mongodbvsorm.menu.add;
 
-import com.apu.mongodbvsorm.TempRepository;
+import com.apu.mongodbvsorm.utils.storage.TemporaryStorage;
 import com.apu.mongodbvsorm.entities.Parameter;
 import com.apu.mongodbvsorm.menu.AddMenuState;
 import com.apu.mongodbvsorm.menu.MenuState;
@@ -34,12 +34,12 @@ public class AddParameterValueMenuState extends MenuState {
                 break;
             }
         }
-        Parameter tempParameter = TempRepository.getTempParameter();
+        Parameter tempParameter = TemporaryStorage.getTempParameter();
         if(tempParameter == null)
             throw new NullPointerException("tempParameter hasn't initialized yet.");
         tempParameter.setValue(inputText);
-        System.out.println("Added: " + tempParameter.toString());
-        TempRepository.getEntityToSave().getParameters()
+        System.out.println("Created: " + tempParameter.toString());
+        TemporaryStorage.getEntityToSave().getParameters()
                 .put(tempParameter.getName(), tempParameter.getValue());
 //        MenuState.setPreviousState(this);
         MenuState.setCurrentState(AddMenuState.getInstance());

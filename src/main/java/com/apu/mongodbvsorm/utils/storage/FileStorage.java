@@ -8,16 +8,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class FileStorage<T> implements Storage<T> {
+public class FileStorage<T> {
     
     private String storageFileName = "storage.txt";
     
-    @Override
     public void setFileName(String fileName) {
         this.storageFileName = fileName;
     }
 
-    @Override
     public void add(T data) throws IOException {
         if(!(data instanceof String)) return;
         
@@ -27,7 +25,6 @@ public class FileStorage<T> implements Storage<T> {
         }             
     }
 
-    @Override
     public boolean find(T data) throws IOException {
         if(!(data instanceof String)) return false;
         try (BufferedReader reader = 
