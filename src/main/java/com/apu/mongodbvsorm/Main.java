@@ -9,10 +9,12 @@ import com.apu.mongodbvsorm.dao.NotebookEntityDAO;
 import com.apu.mongodbvsorm.menu.MainMenuState;
 import com.apu.mongodbvsorm.menu.MenuState;
 import com.apu.mongodbvsorm.utils.Logger;
+import com.apu.mongodbvsorm.utils.Settings;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.ReadPreference;
 import com.mongodb.ServerAddress;
+import java.io.IOException;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
@@ -22,10 +24,6 @@ import org.mongodb.morphia.Morphia;
  * @author apu
  */
 public class Main {
-    
-    public static final String DB_HOST = "127.0.0.1";
-    public static final int DB_PORT = 27017;
-    public static final String DB_NAME = "NotebookDB";
     
     private static Logger LOGGER = Logger.getInstance();
     
@@ -48,7 +46,13 @@ public class Main {
         }      
     }
     
-    private static void init() {
+    private static void init() throws IOException {
+        
+        String dbHost = Settings.loadSettingFromFile("database.host");
+        String dbPortStr = Settings.loadSettingFromFile("database.port");        
+        String dbName = Settings.loadSettingFromFile("database.name");
+        int dbPort = Integer.parseInt(dbPortStr);
+        
         MongoClientOptions mongoOptions = MongoClientOptions.builder()
                 // Wait 1m for a query to finish, https://jira.mongodb.org/browse/JAVA-1076
             .socketTimeout(60000) 
@@ -59,13 +63,14 @@ public class Main {
                 // Read from the primary, if not available use a secondary
             .readPreference(ReadPreference.primaryPreferred()) 
             .build();
-        try (MongoClient mongoClient = new MongoClient(new ServerAddress(DB_HOST, DB_PORT), mongoOptions)) {        
+        ServerAddress address = new ServerAddress(dbHost, dbPort);
+        try (MongoClient mongoClient = new MongoClient(address, mongoOptions)) {        
             final Morphia morphia = new Morphia();
             morphia.mapPackage("com.apu.mongodbvsorm.entities");
-            final Datastore datastore = morphia.createDatastore(mongoClient, "notebookDB");        
+            final Datastore datastore = morphia.createDatastore(mongoClient, dbName);        
             NotebookEntityDAO.init(datastore);
         }
-        LOGGER.debug(Main.class, "Database connected - " + DB_HOST + " : " + DB_PORT);
+        LOGGER.debug(Main.class, "Database connected - " + dbHost + " : " + dbPort);
     }
     
 }
