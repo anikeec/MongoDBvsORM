@@ -3,21 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.apu.mongodbvsorm.menu.add;
+package com.apu.mongodbvsorm.menu.find;
 
 import com.apu.mongodbvsorm.TempRepository;
-import com.apu.mongodbvsorm.entities.Parameter;
+import com.apu.mongodbvsorm.entities.NotebookEntity;
 import com.apu.mongodbvsorm.menu.MenuState;
 
 /**
  *
  * @author apu
  */
-public class AddParameterMenuState extends MenuState {
+public class FindByParameterMenuState extends MenuState {
     
     private static MenuState instance;
 
-    private AddParameterMenuState() {
+    private FindByParameterMenuState() {
     }
     
     @Override
@@ -32,12 +32,12 @@ public class AddParameterMenuState extends MenuState {
             } else {
                 break;
             }
-        }
-        Parameter tempParameter = new Parameter();
-        tempParameter.setName(inputText);
-        TempRepository.setTempParameter(tempParameter);
+        }        
+        NotebookEntity tempEntity = new NotebookEntity();
+        tempEntity.getParameters().put(inputText, null);
+        TempRepository.setEntityToSave(tempEntity);
 //        MenuState.setPreviousState(this);
-        MenuState.setCurrentState(AddParameterValueMenuState.getInstance());
+        MenuState.setCurrentState(FindProcessMenuState.getInstance());
         return MenuState.RET_OK;
     }
 
@@ -50,7 +50,7 @@ public class AddParameterMenuState extends MenuState {
     
     public static MenuState getInstance() {
         if(instance == null)
-            instance = new AddParameterMenuState();
+            instance = new FindByParameterMenuState();
         return instance;
     }
     

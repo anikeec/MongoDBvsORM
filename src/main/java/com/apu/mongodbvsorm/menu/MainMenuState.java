@@ -28,6 +28,10 @@ public class MainMenuState extends MenuState {
                     MenuState.setPreviousState(this);
                     MenuState.setCurrentState(AddMenuState.getInstance());
                     break;
+            case 3:
+                    MenuState.setPreviousState(this);
+                    MenuState.setCurrentState(FindMenuState.getInstance());
+                    break;                    
             default:
                     break;
         }        
