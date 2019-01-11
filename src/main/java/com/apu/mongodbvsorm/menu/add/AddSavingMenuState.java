@@ -27,8 +27,13 @@ public class AddSavingMenuState extends MenuState {
         NotebookEntity tempEntity = TempRepository.getEntityToSave();
         if(tempEntity == null)
             throw new NullPointerException("tempEntity hasn't initialized yet.");
-        tempEntity.setEntityId(2);
-        NotebookEntityDAO.getInstance().save(tempEntity);
+        try {
+            NotebookEntityDAO.getInstance().save(tempEntity);
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+        TempRepository.setTempParameter(null);
+        TempRepository.setEntityToSave(null);
         System.out.println("Entity has saved:");
         System.out.println(tempEntity.toString());
         System.out.println("");
