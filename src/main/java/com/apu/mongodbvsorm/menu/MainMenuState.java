@@ -31,7 +31,11 @@ public class MainMenuState extends MenuState {
             case 3:
                     MenuState.setPreviousState(this);
                     MenuState.setCurrentState(FindMenuState.getInstance());
-                    break;                    
+                    break; 
+            case 4:
+                    MenuState.setPreviousState(this);
+                    MenuState.setCurrentState(DeleteMenuState.getInstance());
+                    break;   
             default:
                     System.out.println("Hasn't realized yet.");
                     break;
