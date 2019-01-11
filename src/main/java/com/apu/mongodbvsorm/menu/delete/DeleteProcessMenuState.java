@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.apu.mongodbvsorm.menu.find;
+package com.apu.mongodbvsorm.menu.delete;
 
-import com.apu.mongodbvsorm.TempRepository;
+import com.apu.mongodbvsorm.utils.storage.TemporaryStorage;
 import com.apu.mongodbvsorm.dao.NotebookEntityDAO;
 import com.apu.mongodbvsorm.entities.NotebookEntity;
 import com.apu.mongodbvsorm.menu.MainMenuState;
@@ -23,17 +23,17 @@ import org.mongodb.morphia.query.Query;
  *
  * @author apu
  */
-public class FindProcessMenuState  extends MenuState {
+public class DeleteProcessMenuState  extends MenuState {
 
     private static Logger LOGGER = Logger.getInstance();
     private static MenuState instance;
 
-    private FindProcessMenuState() {
+    private DeleteProcessMenuState() {
     }
     
     @Override
     public String handle() {
-        NotebookEntity tempEntity = TempRepository.getEntityToSave();
+        NotebookEntity tempEntity = TemporaryStorage.getEntityToSave();
         if(tempEntity == null)
             throw new NullPointerException("tempEntity hasn't initialized yet.");
         
@@ -55,17 +55,22 @@ public class FindProcessMenuState  extends MenuState {
             }
         }
         List<NotebookEntity> results;
+        
         try {
             results = dao.find(query).asList();
-            System.out.println("Search results:");
+            LOGGER.info(DeleteProcessMenuState.class, "Find for delete:");
+            System.out.println("Find for delete:");
             for(NotebookEntity entity:results) {
-                System.out.println(entity.toString());
+                dao.deleteById(entity.getEntityId());
+                String result = entity.toString() + " - deleted.";
+                LOGGER.info(DeleteProcessMenuState.class, result);
+                System.out.println(result);
             }
         } catch (Exception ex) {
             LOGGER.error(AddSavingMenuState.class, ExceptionUtils.getStackTrace(ex));
         }
-        TempRepository.setTempParameter(null);
-        TempRepository.setEntityToSave(null);
+        TemporaryStorage.setTempParameter(null);
+        TemporaryStorage.setEntityToSave(null);
         
         System.out.println();
         MenuState.setCurrentState(MainMenuState.getInstance());
@@ -79,7 +84,7 @@ public class FindProcessMenuState  extends MenuState {
     
     public static MenuState getInstance() {
         if(instance == null)
-            instance = new FindProcessMenuState();
+            instance = new DeleteProcessMenuState();
         return instance;
     }
     

@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.apu.mongodbvsorm.menu.find;
+package com.apu.mongodbvsorm.menu.delete;
 
-import com.apu.mongodbvsorm.TempRepository;
+import com.apu.mongodbvsorm.menu.find.*;
+import com.apu.mongodbvsorm.utils.storage.TemporaryStorage;
 import com.apu.mongodbvsorm.entities.NotebookEntity;
 import com.apu.mongodbvsorm.menu.MenuState;
 
@@ -13,11 +14,11 @@ import com.apu.mongodbvsorm.menu.MenuState;
  *
  * @author apu
  */
-public class FindByParameterMenuState extends MenuState {
+public class DeleteByParameterMenuState extends MenuState {
     
     private static MenuState instance;
 
-    private FindByParameterMenuState() {
+    private DeleteByParameterMenuState() {
     }
     
     @Override
@@ -35,9 +36,8 @@ public class FindByParameterMenuState extends MenuState {
         }        
         NotebookEntity tempEntity = new NotebookEntity();
         tempEntity.getParameters().put(inputText, null);
-        TempRepository.setEntityToSave(tempEntity);
-//        MenuState.setPreviousState(this);
-        MenuState.setCurrentState(FindProcessMenuState.getInstance());
+        TemporaryStorage.setEntityToSave(tempEntity);
+        MenuState.setCurrentState(DeleteProcessMenuState.getInstance());
         return MenuState.RET_OK;
     }
 
@@ -50,7 +50,7 @@ public class FindByParameterMenuState extends MenuState {
     
     public static MenuState getInstance() {
         if(instance == null)
-            instance = new FindByParameterMenuState();
+            instance = new DeleteByParameterMenuState();
         return instance;
     }
     
